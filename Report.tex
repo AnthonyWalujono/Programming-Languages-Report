@@ -1,0 +1,506 @@
+\documentclass{article}
+
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage[usenames]{color}
+\usepackage{hyperref}
+  \hypersetup{
+    colorlinks = true,
+    urlcolor = blue,       % color of external links using \href
+    linkcolor= blue,       % color of internal links 
+    citecolor= blue,       % color of links to bibliography
+    filecolor= blue,        % color of file links
+    }
+    
+\usepackage{listings}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=haskell,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\title{CPSC-354 Report}
+\author{Anthony Walujono  \\ Chapman University}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Short introduction to your report \ldots 
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+\section{What is Haskell?}\label{What is Haskell?}
+Haskell is a purely functional programming language. The features of Haskell are:
+\begin{enumerate}
+  \item Functional : Haskell codes are expressed in the form of functions.
+  \item Pure : 
+  \begin{itemize}
+    \item Haskell expressions have no “side effects”.
+    \item Every variable or data structure is immutable.
+    \item Calling the same function with the same arguments will give the same results every time.
+  \end{itemize}
+  \item Statically typed: Every expression has a type and is known at compile time.
+  \item Type inference: Haskell can infer the type of functions and expressions if we don't explicitly declare their types.
+  \item Lazy evaluation : Haskell expressions are not evaluated until their results are needed. This enables us to define an infinite list and the compiler will only allocate the ones we use on the infinite list.
+\end{enumerate}
+
+\subsection{Differences with Other Languages}
+
+The difference between Imperative programming languages (such as C, C++, Java) and functional programming language:
+\begin{itemize}
+  \item Imperative programming languages use a sequence of tasks and execute them. While executing the tasks, variables can change state. For instance, a variable x is set 0, then later it can be set to another value. 
+  \item Functional programming language performs computation with the concept of mathematical functions that use conditional expressions and recursion.
+\end{itemize}
+ 
+\medskip\noindent
+Here are examples of the different code written in Imperative programming language and Haskell:
+\begin{itemize}
+\item Python program to display the Fibonacci sequence up the n-th number.
+\begin{lstlisting}
+nnums = int(input("How many numbers?"))
+#first two numbers
+n1, n2 = 0, 1
+count = 0
+
+#check if the n-th numbers is a positive number 
+if nnums <= 0;
+	print("Please enter a positive integer")
+	
+#if there is only one number, return n1
+elif nnums ==1
+	print("Fibonacci sequence upto", nnums, ":")
+	print(n1)
+	
+#generate fibonacci sequence
+else:
+	print("Fibonacci Sequence: ")
+	while cout < nnums:
+	print(n1)
+	nth = n1 + n2
+	#update values 
+	n1 = n2
+	n2 = nth 
+	cout += 1
+\end{lstlisting}
+\item The Haskell code to generate Fibonacci Sequence:
+\begin{lstlisting}
+	fib = 0 : 1: [a + b | (a,b) <- zip fib (tail fib)]
+\end{lstlisting}
+\end{itemize}
+We can see the obvious difference from the above example codes, that Haskell code is very efficient and short, it only take 1 line. Compare to Phyton codes take several lines. 
+
+\subsection{Haskell Syntax}
+Haskell function syntax:
+\begin{enumerate}
+\item The Function name should start with lowercase.
+\item To declare a function: Function name followed by a space then the parameters. 
+\newline \newline For example: 
+\begin{lstlisting}
+	  doubleNumber x = x +  x    
+\end{lstlisting} 
+This function name doubleNumber will double a given number.
+\newline
+\item To declare a variable type use double colon punctuation ::
+ \newline \newline For example: 
+\begin{lstlisting}
+	x :: Int
+	x = 5
+\end{lstlisting}
+                     Variable x is declared with type Int and has value 5.
+                     \newline
+                     \newline
+                     There is no assignment in Haskell, = is not an assignment, instead = is a definition. In this example x defined to be 5. 
+\newline
+\item Haskell variables are not mutable, in this example x cannot be changed later. 
+\newline \newline For example:  
+\begin{lstlisting}
+	x :: Int
+	x = 5
+	x = 10 
+	print x
+\end{lstlisting}
+     The line x = 5 will results in an error of multiple declaration of ‘x’.
+     \newline
+\item  Defining a function type on Haskell:
+\begin{lstlisting}
+	functionname  :: type -> type
+	sumOfNum :: Integer -> Integer
+\end{lstlisting}
+         This defines the function sumOfNum which takes an Integer  as input and yields Integer as output.
+\end{enumerate}
+
+\subsection{Pattern Matching}
+Haskell uses Pattern Matching to evaluate a function.
+\newline Example of pattern matching:
+\begin{lstlisting}
+	numToStr :: Integer -> String
+	numToStr 1 = One
+	numToStr x =  Error, not a number
+\end{lstlisting}
+ When we call numToStr, the patterns will be checked to make sure it conforms to a defined pattern. In this example only number 1 matches the pattern, if not, it will default to x.    
+
+\subsection{Recursion}
+Recursion: in Haskell there is no loop, so it uses recursion.
+\newline Recursion is a way of defining functions in which the function is applied inside its own definition. In Mathematics definitions are often given recursively, for example, the Fibonacci sequence is defined recursively.
+\newline Here are some example of recursive functions:
+\begin{lstlisting}
+ maximum :: (Ord a) => [a] -> a
+ maximum [] = error maximum of empty list
+ maximum [x] = x
+ maximum (x:xs) = max x (maximum xs)
+\end{lstlisting}
+If we call maximum [3,6,1] , this function will returns 6.
+\newline Another recursive function: a quick sort function: 
+\begin{lstlisting}
+ quicksort :: (Ord a) => [a] -> [a]
+  quicksort [] = []
+  quicksort (x:xs) = 
+         let smallerSorted = quicksort [a | a <- xs, a <= x]
+              biggerSorted = quicksort [a | a <- xs, a> x]
+         in smallerSorted ++ [x] ++ biggerSorted
+\end{lstlisting}
+The main algorithm of quick sort: a sorted list is a list that has  all the values smaller than (or equal to) the head of the list in front ( and those values are sorted), then comes the head of the list in the middle and then come all the values that are bigger than the head (they’re also sorted).
+
+\subsection{Problems with Haskell}
+Haskell Lazy evaluation: evaluation of function arguments is delayed as long as possible, they are not evaluated until it actually becomes necessary to do so. An unevaluated expression ( called a “thunk”) is packaged without doing any actual work.
+\newline \newline For example:
+\newline  \newline \indent somefunction 7 (30$^3456$)
+\newline \newline When evaluating somefunction the second argument will be packaged up into a thunk without doing any actual computation, and somefunction will be called immediately. Since somefunction never uses its second argument, the thunk will be thrown away by garbage collector.
+\newline \newline Another example of Haskell Lazy evaluation:
+\newline When we define an infinite list: 
+\begin{lstlisting}
+ infinitList = [10, 20 . .]
+\end{lstlisting}
+This list will only be created up to what you specified and when you need it, although it can generate an infinite list.
+\newline Another example of Lazy evaluation on infinite list:
+\begin{lstlisting}
+evenUpto20 = takeWhile (<=20) [2, 4 ..]
+\end{lstlisting}
+This evenUpto20 function will take even values from an infinite list, but only up to 20.
+
+\section{Data Types}
+\subsection{Haskell Data Types}
+Haskell Data Types include:
+\begin{itemize}
+  \item Int : the size depends on the machine) min value -2$^63$ and max 2$^63$ for 64 bit machine. 
+  \item Integer : the value is unbounded.
+  \item Float : is a real floating point with single precision.
+  \item Double : is a real floating point with double precision.
+  \item Bool : is a boolean type value of True or False
+  \item Char: represents a character, denoted by  single quotes.
+  \item String : represents strings of character, denoted by double quotes.
+\end{itemize}
+\subsection{Algebraic Data Types}
+Algebraic Data Type: is a user defined data type, created using algebraic operations. The algebra operations are “sum” and “product”.
+“sum” means alternation ( A | B ) meaning A or B but not both.
+“product” means combination (A B) meaning A and B together.
+\newline Example:
+\begin{lstlisting}
+            data numpair = I Int | D  Double
+\end{lstlisting}
+             This is just one number, either Int I or Double D.
+\begin{lstlisting}
+              data numpair = N Int Double
+\end{lstlisting}
+              This is a pair of numbers, Int and Double.
+              
+\section{Parsing Arithmetic Expression}              
+\subsection{Ambiguous Grammar}
+Ambiguous Grammar: is a context free grammar that has more than one derivation tree.
+\newline \newline Example of Ambiguous grammar:
+\begin{lstlisting}
+Exp -> Exp - Exp 
+Exp -> Exp * Exp
+Exp -> Int
+\end{lstlisting}
+\indent Parsing this arithmetic expression  10 - 1 * 5 
+\begin{lstlisting}
+	   Exp
+	 /     \
+  Exp  -   Exp
+ /    \     | 
+Exp * Exp   Int
+|       | 
+Int	Int
+10  *   1   -   5 =  5
+\end{lstlisting}
+Or another possible parsing tree
+\begin{lstlisting}
+	   Exp
+	 /     \
+  Exp  *  Exp
+ /    \     | 
+Exp - Exp   Int
+|       | 
+Int	Int
+10  -   1   *   5 =  45
+\end{lstlisting}
+ Because of ambiguous grammar, there are two different results of parsing the above arithmetic expression 10 -1 * 5 = 5 or 10 -1 * 5 = 45.
+ \newline To fix this ambiguous grammar we can add a precedence level to the grammar.
+
+\subsection{Non-Ambiguous Grammar}
+Example of Non-Ambigious Grammar:
+ \begin{lstlisting}
+	   	  Exp
+			/     \
+		   Exp  -   Exp1
+ 		     |		   | 
+		    Exp1      Exp2
+		   /     \      |
+      Exp1 * Exp2     Int
+		|	       |       10
+      Exp2    Int
+		 |	      5
+       Int
+        1
+        			1 * 5 - 10  = -5 
+\end{lstlisting}
+ The result of parsing the arithmetic expression 10 - 1* 5 is - 5 using the non-ambiguous grammar.
+
+\section{Lambda Calculus}
+The Lambda (represented by \ symbol in this report) Calculus is the smallest and simplest programming language. The Lambda Calculus consists of a single transformation rule ( variable substitution) and a single function definition scheme.
+\newline \newline The syntax of Lambda Calculus consists of 3 programming constructs:
+\begin{enumerate}
+  \item Abstraction : is function definition.
+  \newline Example:
+   \begin{lstlisting}
+   \x.e 	where e: is an expression
+			           x : is a variable
+				\  : is lambda symbol
+                                          \x.e is a function or a program 
+\end{lstlisting}
+  \item Application: 
+  \newline Example:
+  \begin{lstlisting}
+       e1 e2      e1 and e2 are programs
+       e1 e2 applies function e1 to argument e2
+\end{lstlisting}
+  \item Variables: the basic programs are just variables.
+  \end{enumerate}
+  An expression is defined recursively: 
+  \begin{lstlisting}
+        <expression> := <name> | <function> | <application>
+        <function>      := \ <name>. <expression>
+        <application>  := <expression> <expression>
+\end{lstlisting}
+ An expression can be surrounded with parenthesis for clarity.
+\newline The only keywords used in Lambda Calculus are \ and . (dot).
+\newline The adopted convention rule is that function application associates from the left, the expression is evaluated applying the expressions as follows:
+\newline \newline \indent (...((e1 e2)e3)...en)
+\newline \newline A Lambda expression is a single identifier. 
+\newline	For example : 
+\begin{lstlisting}
+    \x.x 
+        This expression defines the identity function  with a single identity x.
+\end{lstlisting}   
+ Functions can be applied to expressions. 
+\newline An example of  an application :
+\begin{lstlisting}
+                        (\x.x)y
+                            This is the identity function x applied to y.
+\end{lstlisting} 
+ \subsection{Rules for dropping Parenthesis}                            
+\begin{itemize}
+  \item Abstract syntax: is syntax for trees.
+  \item Concrete syntax: is syntax for strings.
+\end{itemize}
+When a tree is linearized into strings, we get many parentheses, so we need rules for dropping parenthesis.
+\begin{itemize}
+  \item Application associates to the left.
+  \newline For example:
+  \begin{lstlisting}
+    xyz  in all parentheses : ((xy)z)
+  \end{lstlisting} 
+  \item Abstraction is a unary operation, so we can drop parenthesis without creating ambiguities.
+    \newline For example:
+    \begin{lstlisting}
+    \x.\y.\z.a  in all parentheses : (\x.(\y.(\z.a)))
+ \end{lstlisting} 
+ \item Application has higher precedence than abstraction.
+    \newline For example:
+    \begin{lstlisting}
+    \x.\y.ab   or \x.\y.(ab) or in all parentheses: (\x.(\y.(ab)))
+ \end{lstlisting} 
+\end{itemize}
+Here are some examples of Lambda Calculus terms:
+\begin{lstlisting}
+\x.(3+x)  
+(\x.(6 + x)) 5 
+(\f.(f 2)) (\x.(x+1))
+ \end{lstlisting} 
+Exercise: Put in the parentheses in the right places in the following lambda expressions:
+\begin{lstlisting}
+a b c \ x . x    =  (abc) \x.x
+a b \ x . a x     = (ab) \x. (ax)
+\ a . \ b. \ c. a b c x = \a.\b.\c.(abcx)
+\ x. y b \ x . a x  = \x.(yb)\x.(ax)
+\ x . y \ x . y \ x . a x = \x.( (y) \x. (y (\x. (a x))))
+a b c \ x. \y . a b c \ x . x a b c \ y . a b c = ( (abc) \x.\y.(abc) \x.x (abc)\y.(abc))
+ \end{lstlisting} 
+\subsection{Semantics of Lambda Calculus}
+The Semantics of Lambda Calculus are:
+\begin{itemize}
+\item Reduce a term to another. If it can’t be reduced further, the term is called Normal form. 
+\newline Example of reduction:
+\begin{lstlisting}
+(\x.( 1+x)) 5 -> (1+5) -> 6
+(\f.(f 3)) (\x.(x+1)) -> ((\x.(x + 1)) 3) -> (3 + 1) -> 4
+ \end{lstlisting}
+ \item Substitution: of terms for variables. 
+\newline Example: 
+\begin{lstlisting}
+((\x.e1)e2 -> (e2 e1)
+ \end{lstlisting}
+  Replace every occurrence of variable x in e1 with e2.
+\newline Example of substitution:
+\begin{lstlisting}
+         (\f.(\x. f (f x)) (\x.x+1)) 3
+    =   (\x. (\x.x+1) ((\x.x+1) x)) 3
+    =   (\x.x+1) ((\x.x+1) 3)
+    =   (\x.x+1) (3+1)
+    =   3+1+ 1
+    =   5
+ \end{lstlisting}
+ Substitution can go wrong. 
+\end{itemize}
+A WARNING Example of wrong substitution:
+\begin{lstlisting}
+        (\f. (\x. f (f x)) (\y.y+x)
+          = \x. (\y.y+x) ((\y.y+x) x)
+          = \x. (\y.y+x) (x+x)
+          = \x. (x+x+x).  <--- This is wrong!  The x is captured!
+  \end{lstlisting}
+   We can fix this captured problem by Rename Variables.
+\begin{itemize}
+\item We can rename bound variables.
+\newline Example of bound variable:
+\begin{lstlisting}
+      \x.(x+y)    x is bound variable
+                      \  is the binder.
+  \end{lstlisting}
+  Example of Free variable:
+\begin{lstlisting}
+        \x.(x+y) z   z is a free variable.
+  \end{lstlisting}
+  \item Bound variables are just “placeholders”
+  \item In the above example, x is not special, we can rename with 
+  \item This is an Alpha ($\alpha$) equivalent:
+  \begin{lstlisting}
+        \x.(x+y) = (Alpha) \z.(z+y)
+  \end{lstlisting}
+         Here is how to fix the captured variable from the above WARNING Example:
+\begin{lstlisting}
+         (\f. (\x. f (f x)) (\y.y+x)
+       = (Alpha) (\f. (\z. f (f z)) (\y.y+x)
+       = (S Sharp) \z. (\y.y+x) ((\y.y+x) z)
+       = (S Sharp)  \z. (\y.y+x) (z+x)
+       = (S Sharp)  \z. z+x+x
+  \end{lstlisting}
+\end{itemize}
+Exercise of Church Encoding using substitution and renaming:
+\begin{lstlisting}
+         (\mult. \two. \three. mult two three )
+(\m. \n. \f. \x. m (n f) x)  
+(\f. \x. f (f x))
+(\f. \x. f (f (f x)))
+  \end{lstlisting}
+Solution: 
+\begin{lstlisting}
+    
+   (\m. \n. \f. \x. m (n f) x) (\f2. \x2. f2 (f2 x2)) (\f3. \x3. f3 (f3 (f3 x3)))    
+= ( \n. \f. \x. (\f2. \x2. f2 (f2 x2)) (n f) x) (\f3. \x3. f3 (f3 (f3 x3)))  
+=  ( \f. \x. (\f2. \x2. f2 (f2 x2)) ((\f3. \x3. f3 (f3 (f3 x3))) f) x)
+=   ( \f. \x. (\x2. x(x x2)) ((\f3. \x3. f3 (f3 (f3 x3))) f))
+=   ( \f. \x. ( x(x  ((\f3. \x3. f3 (f3 (f3 x3))) )) f))
+=   ( \f. \x. ( x(x  (( \x3. f (f (f x3))) )) ))
+
+  \end{lstlisting}
+
+
+
+
+
+
+
+\section{Regard The Following Contents (Will Be Deleted Soon)}
+
+\medskip\noindent
+If you want to change the default layout, you need to type commands. For example, \verb+\medskip+ inserts a medium vertical space and \verb+\noindent+ starts a paragraph without indentation.
+ 
+\medskip\noindent
+Mathematics is typeset between double dollars, for example $$x+y=y+x.$$
+
+
+\subsection{LaTeX Resources}
+
+I start a new subsection, so that you can see how it appears in the table of contents.
+
+\begin{itemize}
+\item This is how you itemize in LaTeX.
+\item I think a good way to learn LaTeX is by starting from this template file and build it up step by step. Often stackoverflow will answer your questions. But here are a few resources:
+  \begin{enumerate}
+  \item \href{https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes}{Learn LaTeX in 30 minutes}
+  \end{enumerate}
+\end{itemize}
+
+\subsection{Plagiarism}
+
+To avoid plagiarism, make sure that in addition to \cite{PL} you also cite all the external sources you use.
+
+This section will contain your own introduction to Haskell. 
+
+\medskip\noindent
+To typeset Haskell there are several possibilities. For the example below I took the LaTeX code from \href{https://stackoverflow.com/a/3175141/4600290}{stackoverflow} and the Haskell code from \href{https://hackmd.io/@alexhkurz/HylLKujCP}{my tutorial}.
+
+\begin{lstlisting}
+-- run the transition function on a word and a state
+run :: (State -> Char -> State) -> State -> [Char] -> State
+run delta q [] = q
+run delta q (c:cs) = run delta (delta q c) cs 
+\end{lstlisting}
+
+\medskip\noindent
+This works well for short snippets of code. For entire programs, it is better to have external links to, for example, Github or \href{https://replit.com/@alexhkurz/automata01#main.hs}{Replit} (click on the "Run" button and/or the "Code" tab).
+
+\section{Programming Languages Theory}
+
+In this section you will show what you learned about the theory of programming languages. 
+
+\section{Project}
+
+In this section you will describe a short project. It can either be in Haskell or of a theoretical nature,
+
+\section{Conclusions}\label{conclusions}
+Short conclusion. 
+
+\begin{thebibliography}{99}
+\bibitem[PL]{PL} \href{https://github.com/alexhkurz/programming-languages-2021/blob/main/README.md}{Programming Languages 2021}, Chapman University, 2021.
+\end{thebibliography}
+
+\end{document}
